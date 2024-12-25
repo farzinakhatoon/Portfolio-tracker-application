@@ -1,52 +1,47 @@
-package com.portfolio.controller;
+package com.portfolio.model;
 
-import com.portfolio.model.Stock;
-import com.portfolio.service.StockService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import java.util.List;
+@Entity
+public class Stock {
 
-@RestController
-@RequestMapping("/api/stocks")
-public class StockController {
+    @Id
+    private String ticker;
+    private String name;
+    private int quantity;
+    private double buyPrice;
 
-    @Autowired
-    private StockService stockService;
-
-    // Add a new stock
-    @PostMapping
-    public Stock addStock(@RequestBody Stock stock) {
-        return stockService.addStock(stock);
+    // Getters and Setters
+    public String getTicker() {
+        return ticker;
     }
 
-    // Get all stocks
-    @GetMapping
-    public List<Stock> getAllStocks() {
-        return stockService.getAllStocks();
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
     }
 
-    // Get stock by ticker
-    @GetMapping("/{ticker}")
-    public Stock getStock(@PathVariable String ticker) {
-        return stockService.getStockByTicker(ticker);
+    public String getName() {
+        return name;
     }
 
-    // Update stock information
-    @PutMapping("/{ticker}")
-    public Stock updateStock(@PathVariable String ticker, @RequestBody Stock stock) {
-        return stockService.updateStock(ticker, stock);
+    public void setName(String name) {
+        this.name = name;
     }
 
-    // Delete stock by ticker
-    @DeleteMapping("/{ticker}")
-    public void deleteStock(@PathVariable String ticker) {
-        stockService.deleteStock(ticker);
+    public int getQuantity() {
+        return quantity;
     }
 
-    // Get total portfolio value
-    @GetMapping("/portfolio-value")
-    public double getTotalPortfolioValue() {
-        return stockService.getTotalPortfolioValue();
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getBuyPrice() {
+        return buyPrice;
+    }
+
+    public void setBuyPrice(double buyPrice) {
+        this.buyPrice = buyPrice;
     }
 }
