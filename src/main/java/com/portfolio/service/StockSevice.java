@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 
 @Service
-public class StockService {
+public class StockSevice {
 
     @Autowired
     private StockRepository stockRepository;
