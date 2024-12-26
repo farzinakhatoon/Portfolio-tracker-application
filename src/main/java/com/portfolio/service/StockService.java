@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-  
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,7 +18,8 @@ public class StockService {
     private StockRepository stockRepository;
 
     private static final String API_KEY = "50ZA1HDKN8G0WOCD";
-    private static final String API_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=%s&interval=5min&apikey=" + API_KEY;
+    private static final String API_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=%s&interval=5min&apikey="
+            + API_KEY;
 
     // Add a new stock
     public Stock addStock(Stock stock) {
@@ -60,7 +60,8 @@ public class StockService {
             // Get stock data from Alpha Vantage API
             String response = restTemplate.getForObject(url, String.class);
             // Extract the stock price from the response JSON
-            // Example: Parse JSON to get the latest stock price (you may need to use a JSON parser like Jackson)
+            // Example: Parse JSON to get the latest stock price (you may need to use a JSON
+            // parser like Jackson)
             return parseStockPrice(response);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,31 +71,30 @@ public class StockService {
 
     // Helper method to parse the real-time stock price
 
-private double parseStockPrice(String response) {
-    try {
-        // Initialize Jackson's ObjectMapper
-        ObjectMapper objectMapper = new ObjectMapper();
-        
-        // Parse the JSON response
-        JsonNode rootNode = objectMapper.readTree(response);
+    private double parseStockPrice(String response) {
+        try {
+            // Initialize Jackson's ObjectMapper
+            ObjectMapper objectMapper = new ObjectMapper();
 
-        // Navigate to the relevant node containing the time series data
-        JsonNode timeSeriesNode = rootNode.path("Time Series (5min)");
-        
-        // Get the latest entry (the first key in the object)
-        String latestTimeKey = timeSeriesNode.fieldNames().next();
-        JsonNode latestDataNode = timeSeriesNode.path(latestTimeKey);
+            // Parse the JSON response
+            JsonNode rootNode = objectMapper.readTree(response);
 
-        // Extract the "close" price from the latest data node
-        double latestPrice = latestDataNode.path("4. close").asDouble();
+            // Navigate to the relevant node containing the time series data
+            JsonNode timeSeriesNode = rootNode.path("Time Series (5min)");
 
-        return latestPrice; // Return the parsed price
-    } catch (Exception e) {
-        e.printStackTrace();
-        return 0.0; // Default to 0.0 in case of an error
+            // Get the latest entry (the first key in the object)
+            String latestTimeKey = timeSeriesNode.fieldNames().next();
+            JsonNode latestDataNode = timeSeriesNode.path(latestTimeKey);
+
+            // Extract the "close" price from the latest data node
+            double latestPrice = latestDataNode.path("4. close").asDouble();
+
+            return latestPrice; // Return the parsed price
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0.0; // Default to 0.0 in case of an error
+        }
     }
-}
-
 
     // Calculate total portfolio value
     public double getTotalPortfolioValue() {
@@ -106,4 +106,3 @@ private double parseStockPrice(String response) {
         return totalValue;
     }
 }
-
