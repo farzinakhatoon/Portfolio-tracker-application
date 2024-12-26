@@ -23,14 +23,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.2.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <!-- Spring Boot Data JPA Dependency -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.2.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <!-- JPA for Jakarta Persistence -->
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <version>3.2.0</version>
+            <version>${spring.boot.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -59,7 +59,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>3.2.0</version>
+            <version>${spring.boot.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -77,10 +77,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                    <configuration>
-                        <mainClass>com.portfolio.PortfolioTrackerApplication</mainClass>
-                    </configuration>
-                <version>3.2.0</version>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.portfolio.PortfolioTrackerApplication</mainClass>
+                </configuration>
             </plugin>
 
             <!-- Maven Compiler Plugin -->
