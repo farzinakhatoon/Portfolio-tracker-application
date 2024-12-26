@@ -1,31 +1,14 @@
-# Use an official OpenJDK base image
-FROM openjdk:21-jdk-slim as build
-
-# Install Maven
-RUN apt-get update && apt-get install -y maven
-
-# Set the working directory
-WORKDIR /app
-
-# Copy the pom.xml and download dependencies
-COPY pom.xml .
-RUN mvn dependency:go-offline
-
-# Copy the entire project and build it
-COPY . .
-RUN mvn clean package -DskipTests
-
-# Use OpenJDK as the runtime environment
+# Use an official Java runtime as a parent image
 FROM openjdk:21-jdk-slim
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the jar file from the build stage
-COPY --from=build /app/target/portfolio-tracker-1.0.0.jar /app/portfolio-tracker.jar
+# Copy the Maven jar file into the container at /app
+COPY target/portfolio-tracker-1.0.0.jar /app/portfolio-tracker.jar
 
-# Expose the port that the Spring Boot app will run on
+# Expose the port the app will run on
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "/app/portfolio-tracker.jar"]
+# Run the jar file
+CMD ["java", "-jar", "portfolio-tracker.jar"]
