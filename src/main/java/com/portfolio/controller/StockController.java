@@ -2,10 +2,12 @@ package com.portfolio.controller;
 
 import com.portfolio.model.Stock;
 import com.portfolio.service.StockService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/stocks")
@@ -20,7 +22,7 @@ public class StockController {
     }
 
     @PostMapping
-    public Stock addStock(@RequestBody Stock stock) {
+    public Stock addStock(@Valid @RequestBody Stock stock) {
         return stockService.addStock(stock);
     }
 
@@ -48,4 +50,15 @@ public class StockController {
     public double getTotalPortfolioValue() {
         return stockService.getTotalPortfolioValue();
     }
+
+    @GetMapping("/top-stock")
+    public Stock getTopPerformingStock() {
+        return stockService.getTopPerformingStock();
+    }
+
+    @GetMapping("/distribution")
+    public Map<String, Double> getPortfolioDistribution() {
+        return stockService.getPortfolioDistribution();
+    }
 }
+
