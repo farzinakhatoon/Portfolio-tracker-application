@@ -44,4 +44,12 @@ public class Stock {
     public void setBuyPrice(double buyPrice) {
         this.buyPrice = buyPrice;
     }
+
+     public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
