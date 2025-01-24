@@ -1,16 +1,28 @@
 package com.portfolio.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Stock {
 
     @Id
     private String ticker;
+
+    @NotNull
     private String name;
+
+    @Min(1)
     private int quantity;
+
+    @Min(0)
     private double buyPrice;
+
+    // Many-to-One relationship with User
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     // Getters and Setters
     public String getTicker() {
@@ -45,7 +57,7 @@ public class Stock {
         this.buyPrice = buyPrice;
     }
 
-     public User getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -53,3 +65,4 @@ public class Stock {
         this.user = user;
     }
 }
+
